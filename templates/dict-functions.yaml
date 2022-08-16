@@ -1,0 +1,23 @@
+# define Dict
+{{- $myDict := dict "name1" "value1" "name2" "value2" "name3" "value3" }}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dict-sample
+data: 
+  data: |
+    {{- toYaml $myDict | nindent 4 -}}
+
+{{- /*
+##### output #####
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: dict-sample
+# data: 
+#   data: |
+#     name1: value1
+#     name2: value2
+#     name3: value3
+*/ -}}
