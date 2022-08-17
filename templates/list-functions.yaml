@@ -4,6 +4,14 @@
 # append item
 {{- $myList = append $myList 6 }}
 
+# prepend item
+{{- $myList = prepend $myList 0 }}
+
+# concat item
+{{- $myList2 := list 7 8 }}
+{{- $myList3 := list 9 }}
+{{- $myList = concat $myList $myList2 $myList3 }}
+
 {{- range $myList }}
 apiVersion: v1
 kind: ServiceAccount
@@ -21,20 +29,35 @@ metadata:
 # kind: ServiceAccount
 # metadata:
 #   name: serviceAccount-2
-# apiVersion: v1
+# ...
 # kind: ServiceAccount
 # metadata:
-#   name: serviceAccount-3
-# apiVersion: v1
-# kind: ServiceAccount
-# metadata:
-#   name: serviceAccount-4
-# apiVersion: v1
-# kind: ServiceAccount
-# metadata:
-#   name: serviceAccount-5
-# apiVersion: v1
-# kind: ServiceAccount
-# metadata:
-#   name: serviceAccount-6
+#   name: serviceAccount-9
 */ -}}
+
+# has & index function
+{{- if has 4 $myList }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  # myList[4]
+  name: {{ printf "myList%d" ( index $myList 4 ) }}
+{{- end }}
+
+{{- /*
+##### output #####
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   # myList[4]
+#   name: myList4
+*/ -}}
+
+# fix later
+# {{- $seqList := seq -2 2 10 }}
+# {{- range $seqList }}
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: {{ printf "serviceAccount-%d" . }}
+# {{- end }}
