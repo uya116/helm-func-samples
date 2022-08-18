@@ -53,11 +53,31 @@ metadata:
 #   name: myList4
 */ -}}
 
-# fix later
-# {{- $seqList := seq -2 2 10 }}
-# {{- range $seqList }}
+{{- $seqList := seq -2 2 10 }}
+{{- $seqList = toString $seqList }}
+{{- $seqList = regexSplit " " $seqList -1 }}
+{{- range $seqList }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ printf "serviceAccount-%s" . }}
+{{- end }}
+
+{{- println $seqList }}
+# [-2 0 2 4 6 8 10]
+
+{{- /*
+##### output #####
 # apiVersion: v1
 # kind: ServiceAccount
 # metadata:
-#   name: {{ printf "serviceAccount-%d" . }}
-# {{- end }}
+#   name: serviceAccount--2
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: serviceAccount-0
+# ...
+# kind: ServiceAccount
+# metadata:
+#   name: serviceAccount-10
+*/ -}}
