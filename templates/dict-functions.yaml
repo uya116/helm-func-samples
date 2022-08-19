@@ -1,13 +1,37 @@
 # define Dict
 {{- $myDict := dict "name1" "value1" "name2" "value2" "name3" "value3" }}
 
+# get value
+{{- println ( get $myDict "name1" ) }}
+# value1
+
+# set new key/value
+{{- set $myDict "name4" "value4" -}}
+# map[name1:value1 name2:value2 name3:value3 name4:value4]
+
+# unset key
+{{- unset $myDict "name3" -}}
+{{- println $myDict }}
+# map[name1:value1 name2:value2 name4:value4]
+
+# merge Dict
+{{- merge $myDict ( dict "sourcekey1" "sourcevalue1" ) }}
+{{- println $myDict }}
+{{- /*
+map[name1:value1 name2:value2 name4:value4 sourcekey1:sourcevalue1]
+*/}}
+
+# Dict in Dict
+{{- $myDict2 := dict "name1" ( dict "k1" "v1" "k2" "v2" "k3" "v3" ) "name2" "value2" }}
+{{- $_ := merge $myDict2.name1 ( dict "k4" "v4" ) }}
+
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: dict-sample
 data: 
   data: |
-    {{- toYaml $myDict | nindent 4 -}}
+    {{- toYaml $myDict2 | nindent 4 -}}
 
 {{- /*
 ##### output #####
@@ -17,7 +41,10 @@ data:
 #   name: dict-sample
 # data: 
 #   data: |
-#     name1: value1
+#     name1:
+#       k1: v1
+#       k2: v2
+#       k3: v3
+#       k4: v4
 #     name2: value2
-#     name3: value3
 */ -}}
