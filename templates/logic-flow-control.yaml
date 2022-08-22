@@ -1,0 +1,17 @@
+{{- $myDict := dict "name1" "value1" "name2" "value2" "name3" "value3" }}
+
+# if and eq function
+{{- if and ( eq $myDict.name1 "value1" ) ( eq $myDict.name2 "value2" )}}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: if-function
+{{- end }}
+
+{{- /*
+##### output #####
+# apiVersion: v1
+# kind: ServiceAccount
+# metadata:
+#   name: if-function
+*/ -}}
