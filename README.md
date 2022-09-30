@@ -1,3 +1,5 @@
 # helm-func-samples
 
-[list-function](templates/list-functions.yaml)
+This repository summarizes the usage of helm functions
+
+- [list-function](templates/list-functions.yaml)
